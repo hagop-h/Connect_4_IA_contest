@@ -62,5 +62,5 @@ This section describes the functions responsible for computing the AI's moves in
 This function controls the main game loop and allows the player to `choose different game modes, including Player vs Player, Player vs AI, AI vs AI, and statistics mode`. It initializes the game parameters such as the grid, player, and game board dimensions. The function prompts the user to select a game mode and executes the corresponding gameplay function based on the chosen mode. It also handles `errors and exceptions` during the game execution.
 
 
-**Unit Tests :**
+##### Unit Tests :
 We have integrated unit tests into our code in the file `Test_Connect4`, using pytest to ensure that any modifications do not impact other parts of the code. This approach helps maintain the integrity and functionality of the system as it evolves.
