@@ -1,0 +1,238 @@
+from Position import Position
+from UtilsPosition import find_empty_row, count_consecutive_horizontal, count_consecutive_vertical, \
+    count_consecutive_diagonal_left, count_consecutive_diagonal_right
+
+
+# Test cases for the Position class
+
+def test_is_terminal_no_winner():
+    """
+    Test case to check if is_terminal() correctly identifies a non-terminal position.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' ']]
+    position = Position(grid, 'R')
+    assert not position.is_terminal()
+
+
+def test_is_terminal_winner():
+    """
+    Test case to check if is_terminal() correctly identifies a terminal position with a winner.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'J', 'J', 'R', ' ', ' ', ' ']]
+    position = Position(grid, 'J')
+    assert position.is_terminal()
+
+
+def test_evaluate_no_winner():
+    """
+    Test case to check if evaluate() returns 0 for a position with no winner.
+    """
+    grid = [['R', 'J', 'R', 'R ', 'R', 'J', ''],
+            ['J', 'R', 'J', 'J', 'J', 'R', ''],
+            ['R', 'J', 'R', 'R', 'R', 'J', ''],
+            ['J', 'R', 'J', 'J', 'J', 'R', ''],
+            ['R', 'J', 'R', 'R', ' R', 'J', ''],
+            ['J', 'R', 'J', 'J', 'J', 'R', '']]
+    position = Position(grid, 'R')
+    assert position.evaluate() == 0
+
+
+def test_evaluate_winner():
+    """
+    Test case to check if evaluate() returns correct score for a position with a winner.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'J', 'J', 'R', ' ', ' ', ' ']]
+    position = Position(grid, 'J')
+    assert position.evaluate() == 1000
+
+
+# Test cases for helper functions
+
+def test_find_empty_row():
+    """
+    Test case to check if find_empty_row() correctly finds the first empty row in a column.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', 'R', ' ', ' ', ' '],
+            ['J', 'R', 'J', 'R', ' ', ' ', ' ']]
+    assert find_empty_row(grid, 3) == 3
+
+
+def test_count_consecutive_horizontal():
+    """
+    Test case to check if count_consecutive_horizontal() correctly counts consecutive pieces horizontally.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' ']]
+    assert count_consecutive_horizontal(grid, 'R', 2, 2) == 1
+
+
+def test_count_consecutive_vertical():
+    """
+    Test case to check if count_consecutive_vertical() correctly counts consecutive pieces vertically.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' ']]
+    assert count_consecutive_vertical(grid, 'J', 0, 0) == 2
+
+
+def test_count_consecutive_diagonal_right():
+    """
+    Test case to check if count_consecutive_diagonal_right() correctly counts consecutive pieces diagonally right.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' ']]
+    assert count_consecutive_diagonal_right(grid, 'R', 0, 0) == 1
+
+
+def test_count_consecutive_diagonal_left():
+    """
+    Test case to check if count_consecutive_diagonal_left() correctly counts consecutive pieces diagonally left.
+    """
+    grid = [['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' '],
+            ['R', 'J', 'R', ' ', ' ', ' ', ' '],
+            ['J', 'R', 'J', ' ', ' ', ' ', ' ']]
+    assert count_consecutive_diagonal_left(grid, 'R', 0, 0) == 3
+
+# Additional test cases for the Position class
+
+def test_is_terminal_draw():
+    """
+    Test case to check if is_terminal() correctly identifies a draw position.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    position = Position(grid, 'R')
+    assert position.is_terminal()
+
+
+def test_evaluate_draw():
+    """
+    Test case to check if evaluate() correctly evaluates a draw position.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    position = Position(grid, 'R')
+    assert position.evaluate() == 1000
+
+
+def test_evaluate_winning_position():
+    """
+    Test case to check if evaluate() correctly evaluates a position with a potential winning move.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', ' '],
+            ['J', 'R', 'J', 'R', 'J', 'R', ' ']]
+    position = Position(grid, 'R')
+    assert position.evaluate() == 1000
+
+
+# Additional test cases for helper functions
+
+def test_find_empty_row_full_column():
+    """
+    Test case to check if find_empty_row() correctly handles a full column.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    assert find_empty_row(grid, 0) == -1
+
+
+def test_count_consecutive_horizontal_end_of_row():
+    """
+    Test case to check if count_consecutive_horizontal() correctly handles a position at the end of a row.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    assert count_consecutive_horizontal(grid, 'R', 2, 6) == 1
+
+
+def test_count_consecutive_vertical_end_of_column():
+    """
+    Test case to check if count_consecutive_vertical() correctly handles a position at the end of a column.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    assert count_consecutive_vertical(grid, 'R', 4, 0) == 1
+
+
+def test_count_consecutive_diagonal_right_end_of_diagonal():
+    """
+    Test case to check if count_consecutive_diagonal_right() correctly handles a position at the end of a diagonal.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    assert count_consecutive_diagonal_right(grid, 'R', 6, 7) == 1
+
+
+def test_count_consecutive_diagonal_left_end_of_diagonal():
+    """
+    Test case to check if count_consecutive_diagonal_left() correctly handles a position at the end of a diagonal.
+    """
+    grid = [['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J'],
+            ['R', 'J', 'R', 'J', 'R', 'J', 'R'],
+            ['J', 'R', 'J', 'R', 'J', 'R', 'J']]
+    assert count_consecutive_diagonal_left(grid, 'R', 3, 3) == 6
